@@ -1,8 +1,15 @@
 <?php
-class soporte {
+class Soporte {
     private String $titulo;
     private int $numero;
     private float $precio;
+
+    public function __construct(String $tit, int $num, float $pre)
+    {
+        $this->titulo = $tit;
+        $this->numero = $num;
+        $this->precio = $pre;
+    }
 
     // Getters
     public function getTitulo()
@@ -18,7 +25,8 @@ class soporte {
         return $this->precio;
     }
 
-    public function mostrarSoporte(): String {
-        return "";
+    public function mostrarSoporte(): String
+    {
+        return "Título: " .$this->titulo. ", número: " .$this->numero. " y precio->" .$this->precio;
     }
 }
