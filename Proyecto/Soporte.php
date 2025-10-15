@@ -1,16 +1,18 @@
 <?php
 class Soporte {
+    // Atributo
     private String $titulo;
     private int $numero;
     private float $precio;
 
+    // Constructor por parámetro
     public function __construct(String $tit, int $num, float $pre)
     {
         $this->titulo = $tit;
         $this->numero = $num;
         $this->precio = $pre;
     }
-
+    
     // Getters
     public function getTitulo()
     {
