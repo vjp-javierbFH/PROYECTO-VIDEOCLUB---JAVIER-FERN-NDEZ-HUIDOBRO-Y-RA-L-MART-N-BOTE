@@ -1,6 +1,6 @@
 <?php
-// Referencio a la clase Soporte para que en index.php
-include_once "Soporte.php";
+// Clase CintaVideo
+// Referencio a la clase Soporte para que al ejecutar 
 class CintaVideo extends Soporte
 {
     //Atributo
