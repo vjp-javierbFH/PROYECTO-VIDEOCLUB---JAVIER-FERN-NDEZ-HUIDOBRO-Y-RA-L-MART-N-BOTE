@@ -1,5 +1,9 @@
 <?php
-class Soporte {
+class Soporte
+{
+    // Constante IVA
+    private const IVA = 0.21;
+
     // Atributo
     private String $titulo;
     private int $numero;
@@ -12,7 +16,7 @@ class Soporte {
         $this->numero = $num;
         $this->precio = $pre;
     }
-    
+
     // Getters
     public function getTitulo()
     {
@@ -27,8 +31,12 @@ class Soporte {
         return $this->precio;
     }
 
+    public function getPrecioConIva() {
+        return $this->precio * (1 + self::IVA);
+    }
+
     public function mostrarSoporte(): String
     {
-        return "Título: " .$this->titulo. ", número: " .$this->numero. " y precio->" .$this->precio;
+        return "Título: " . $this->titulo . ", número: " . $this->numero . " y precio->" . $this->precio;
     }
 }
