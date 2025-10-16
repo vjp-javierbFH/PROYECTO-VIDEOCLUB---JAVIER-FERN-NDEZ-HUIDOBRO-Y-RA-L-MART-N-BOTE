@@ -16,3 +16,12 @@ echo "<strong>" . $miCinta->getTitulo() . "</strong>";
 echo "<br>Precio: " . $miCinta->getPrecio() . " euros";
 echo "<br>Precio IVA incluido: " . $miCinta->getPrecioConIva() . " euros";
 $miCinta->mostrarCintaVideo();
+
+
+include "Dvd.php";
+echo "<h3>Prueba Dvd.php</h3>"
+$miDvd = new Dvd("Origen", 24, 15, "es,en,fr", "16:9"); 
+echo "<strong>" . $miDvd->titulo . "</strong>"; 
+echo "<br>Precio: " . $miDvd->getPrecio() . " euros"; 
+echo "<br>Precio IVA incluido: " . $miDvd->getPrecioConIva() . " euros";
+$miDvd->mostrarDvd();

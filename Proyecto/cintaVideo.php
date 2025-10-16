@@ -1,6 +1,5 @@
 <?php
 // Clase CintaVideo
-// Referencio a la clase Soporte para que al ejecutar 
 class CintaVideo extends Soporte
 {
     //Atributo
