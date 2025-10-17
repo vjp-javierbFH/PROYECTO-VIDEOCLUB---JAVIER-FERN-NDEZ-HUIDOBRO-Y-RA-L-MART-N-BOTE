@@ -4,6 +4,9 @@ include_once "Dvd.php";
 include_once "Juego.php";
 include_once "Cliente.php";
 
+echo "<h1>Videoclub</h1>";
+echo "<h2>Inicio2</h2>";
+
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Bruce Wayne", 23);
 $cliente2 = new Cliente("Clark Kent", 33);

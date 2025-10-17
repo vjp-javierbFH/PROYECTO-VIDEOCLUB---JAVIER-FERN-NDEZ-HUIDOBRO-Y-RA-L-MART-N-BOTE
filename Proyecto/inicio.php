@@ -1,5 +1,5 @@
 <?php
-echo "<h1>Videoclub</h1><h2>Javier</h2>";
+echo "<h1>Videoclub</h1><h2>Inicio</h2>";
 // Pruebas de ejecución
 echo "<h3>Prueba Soporte.php</h3>";
 // Inicializo utilizando constructor por parámetro
