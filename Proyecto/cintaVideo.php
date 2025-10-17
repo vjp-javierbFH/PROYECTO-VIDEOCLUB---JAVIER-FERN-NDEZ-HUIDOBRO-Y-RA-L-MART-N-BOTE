@@ -15,10 +15,9 @@ class CintaVideo extends Soporte
     }
 
     // Método que muestra los datos de  CintaVideo
-    public function mostrarCintaVideo()
+    public function mostrarResumen()
     {
-        // Llama al método mostrarSoporte de la clase padre
-        parent::mostrarSoporte();
+        echo "Título: ".$this->getTitulo().", número -> " .$this->getNumero()." y precio -> " .$this->getPrecio();
         echo ". Duración: " . $this->duracion . " minutos<br>";
     }
 }

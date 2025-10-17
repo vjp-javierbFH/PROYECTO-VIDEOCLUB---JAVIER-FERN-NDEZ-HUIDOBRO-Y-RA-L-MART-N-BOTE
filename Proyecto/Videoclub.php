@@ -76,7 +76,7 @@ class Videoclub
             echo "No hay productos.<br>";
         } else {
             foreach ($this->productos as $p) {
-                echo "- " . $p->mostrarSoporte() . "<br>";
+                echo "- " . $p->mostrarResumen() . "<br>";
             }
         }
     }
@@ -89,7 +89,7 @@ class Videoclub
             echo "No hay socios.<br>";
         } else {
             foreach ($this->socios as $s) {
-                $s->mostrarCliente();
+                $s->mostrarResumen();
                 echo "<br>";
             }
         }

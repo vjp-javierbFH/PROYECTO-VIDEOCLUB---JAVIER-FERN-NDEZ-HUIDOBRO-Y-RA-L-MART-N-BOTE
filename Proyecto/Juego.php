@@ -17,10 +17,9 @@ class Juego extends Soporte
     }
 
     // Método que muestra los datos del juego
-    public function mostrarJuego()
+    public function mostrarResumen()
     {
-        // Llamo al método mostrarSoporte de la clase padre Soporte
-        parent::mostrarSoporte();
+        echo "Título: " . $this->getTitulo() . ", número -> " . $this->getNumero() . " y precio -> " . $this->getPrecio();
         echo ". Juego: consola -> " . $this->consola .
             ", número mínimo de jugadores: " . $this->minNumJugadores .
             ", número máximo de jugadores: " . $this->maxNumJugadores . "<br>";

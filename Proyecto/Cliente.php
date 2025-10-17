@@ -107,7 +107,7 @@ class Cliente
         } else {
             // Recorre el array para mostrar los datos de soporte
             foreach ($this->soportesAlquilados as $soporte) {
-                echo "- " . $soporte->mostrarSoporte();
+                echo "- " . $soporte->mostrarResumen();
             }
         }
     }

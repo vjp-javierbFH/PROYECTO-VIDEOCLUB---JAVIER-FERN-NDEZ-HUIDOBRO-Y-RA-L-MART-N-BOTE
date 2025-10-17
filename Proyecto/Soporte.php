@@ -1,5 +1,5 @@
 <?php
-class Soporte
+abstract class Soporte
 {
     // Constante IVA
     private const IVA = 0.21;
@@ -37,8 +37,5 @@ class Soporte
     }
 
     // Método que muestra los datos de soporte
-    public function mostrarSoporte(): String
-    {
-        return "Título: <strong>" . $this->titulo . "</strong>, número: <strong>" . $this->numero . "</strong> y precio-> <strong>" . $this->precio ."</strong><br>";
-    }
+    abstract public function mostrarResumen();
 }

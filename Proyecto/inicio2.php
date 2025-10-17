@@ -6,6 +6,7 @@ include_once "Cliente.php";
 
 echo "<h1>Videoclub</h1>";
 echo "<h2>Inicio2</h2>";
+echo "<h3>Prueba Cliente</h3>";
 
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Bruce Wayne", 23);

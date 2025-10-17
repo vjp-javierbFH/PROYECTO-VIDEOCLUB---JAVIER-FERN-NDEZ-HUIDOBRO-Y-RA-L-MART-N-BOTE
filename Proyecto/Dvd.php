@@ -15,9 +15,9 @@ class Dvd extends Soporte
     }
 
     // Método que muestra los datos del Dvd junto con los de la clase padre
-    public function mostrarDvd()
+    public function mostrarResumen()
     {
-        parent::mostrarSoporte();
+        echo "Título: ".$this->getTitulo().", número -> " .$this->getNumero()." y precio -> " .$this->getPrecio();
         echo ". Dvd: idiomas -> " . $this->idiomas . " y formato de la pantalla -> " . $this->formatoPantalla . "<br>";
     }
 }

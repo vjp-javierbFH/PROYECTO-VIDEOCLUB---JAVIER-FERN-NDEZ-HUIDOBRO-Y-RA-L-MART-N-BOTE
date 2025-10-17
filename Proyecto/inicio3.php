@@ -1,5 +1,6 @@
 <?php
-echo "<h1>Videoclub</h1><h2>inicio3</h2>";
+echo "<h1>Videoclub</h1><h2>inicio3</h2><h3>Prueba videoclub</h3>";
+echo "";
 include_once "Videoclub.php"; // No incluimos nada más
 
 $vc = new Videoclub("Severo 8A");
