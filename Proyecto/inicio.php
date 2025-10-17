@@ -11,7 +11,7 @@ echo "<br>Precio IVA incluido: " . $soporte1->getPrecioConIVA() . " euros";
 $soporte1->mostrarSoporte();
 
 
-include "CintaVideo.php";
+include "cintaVideo.php";
 echo "<h3>Prueba CintaVideo.php</h3>";
 $miCinta = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);
 echo "<strong>" . $miCinta->getTitulo() . "</strong>";
