@@ -1,11 +1,12 @@
 <?php
-
+// Clase Dvd que hereda de Soporte
 class Dvd extends Soporte
 {
-
+    // Atributos
     private String $idiomas;
     private String $formatoPantalla;
 
+    // Constructor por parámetro junto con el constructor de la clase padre
     public function __construct(String $tit, int $num, float $pre, String $idiomas, String $formatoPantalla)
     {
         parent::__construct($tit, $num, $pre);
@@ -13,7 +14,10 @@ class Dvd extends Soporte
         $this->formatoPantalla = $formatoPantalla;
     }
 
-    public function mostrarDvd(){
-        return parent::mostrarSoporte(). ". Dvd: idiomas -> " .$this->idiomas. " y formato de la pantalla -> " .$this->formatoPantalla;
+    // Método que muestra los datos del Dvd junto con los de la clase padre
+    public function mostrarDvd()
+    {
+        parent::mostrarSoporte();
+        echo ". Dvd: idiomas -> " . $this->idiomas . " y formato de la pantalla -> " . $this->formatoPantalla . "<br>";
     }
 }

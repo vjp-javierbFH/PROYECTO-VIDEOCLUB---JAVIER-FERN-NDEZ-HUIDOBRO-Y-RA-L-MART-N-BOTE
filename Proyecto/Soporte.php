@@ -31,10 +31,12 @@ class Soporte
         return $this->precio;
     }
 
+    // Método que devuelve un float
     public function getPrecioConIva() {
         return $this->precio * (1 + self::IVA);
     }
 
+    // Método que muestra los datos de soporte
     public function mostrarSoporte(): String
     {
         return "Título: " . $this->titulo . ", número: " . $this->numero . " y precio->" . $this->precio;

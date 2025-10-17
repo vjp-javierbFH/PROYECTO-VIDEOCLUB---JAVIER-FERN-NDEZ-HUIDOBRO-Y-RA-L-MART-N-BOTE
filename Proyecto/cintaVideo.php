@@ -8,12 +8,16 @@ class CintaVideo extends Soporte
     // Constructor por parámetro
     public function __construct(String $tit, int $num, float $pre, int $dur)
     {
+        // Constructor de la clase padre
         parent::__construct($tit, $num, $pre);
         $this->duracion = $dur;
     }
 
+    // Método que muestra los datos de  CintaVideo
     public function mostrarCintaVideo()
     {
-        return parent::mostrarSoporte() . ". Duración: " . $this->duracion;
+        // Llama al método mostrarSoporte de la clase padre
+        parent::mostrarSoporte();
+        echo ". Duración: " . $this->duracion . " minutos<br>";
     }
 }
