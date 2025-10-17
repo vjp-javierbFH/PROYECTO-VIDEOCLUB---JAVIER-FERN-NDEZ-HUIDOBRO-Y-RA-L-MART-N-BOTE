@@ -39,6 +39,6 @@ class Soporte
     // Método que muestra los datos de soporte
     public function mostrarSoporte(): String
     {
-        return "Título: " . $this->titulo . ", número: " . $this->numero . " y precio->" . $this->precio;
+        return "Título: <strong>" . $this->titulo . "</strong>, número: <strong>" . $this->numero . "</strong> y precio-> <strong>" . $this->precio ."</strong><br>";
     }
 }
