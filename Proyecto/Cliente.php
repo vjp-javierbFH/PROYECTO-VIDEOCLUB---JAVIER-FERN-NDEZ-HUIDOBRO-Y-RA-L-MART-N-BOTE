@@ -66,7 +66,7 @@ class Cliente
             return false;
         }
 
-        if(count($this->soportesAlquilados) > $this->maxAlquilerConcurrente){
+        if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
             echo "El cliente ha alcanzado el número máximo de alquileres";
             return false;
         }
