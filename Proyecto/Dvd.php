@@ -17,7 +17,12 @@ class Dvd extends Soporte
     // Método que muestra los datos del Dvd junto con los de la clase padre
     public function mostrarResumen()
     {
-        echo "Título: ".$this->getTitulo().", número -> " .$this->getNumero()." y precio -> " .$this->getPrecio();
+        echo "Título: " . $this->titulo . ", número -> " . $this->numero . ", precio -> " . $this->precio . " €";
         echo ". Dvd: idiomas -> " . $this->idiomas . " y formato de la pantalla -> " . $this->formatoPantalla . "<br>";
+    }
+
+    // Método de la interfaz Resumible
+    public function muestraResumen(): void{
+        echo $this->mostrarResumen();
     }
 }

@@ -76,7 +76,10 @@ class Videoclub
             echo "No hay productos.<br>";
         } else {
             foreach ($this->productos as $p) {
-                echo "- " . $p->mostrarResumen() . "<br>";
+                // Usamos el método del interfaz Resumible
+                if ($p instanceof Resumible) {
+                    $p->muestraResumen();
+                }
             }
         }
     }
@@ -89,7 +92,7 @@ class Videoclub
             echo "No hay socios.<br>";
         } else {
             foreach ($this->socios as $s) {
-                $s->mostrarResumen();
+                $s->mostrarCliente();
                 echo "<br>";
             }
         }

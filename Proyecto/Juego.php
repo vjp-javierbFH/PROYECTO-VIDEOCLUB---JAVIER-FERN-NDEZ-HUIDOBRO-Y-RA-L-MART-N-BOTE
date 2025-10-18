@@ -19,9 +19,15 @@ class Juego extends Soporte
     // Método que muestra los datos del juego
     public function mostrarResumen()
     {
-        echo "Título: " . $this->getTitulo() . ", número -> " . $this->getNumero() . " y precio -> " . $this->getPrecio();
+        echo "Título: " . $this->titulo . ", número -> " . $this->numero . ", precio -> " . $this->precio . " €";
         echo ". Juego: consola -> " . $this->consola .
             ", número mínimo de jugadores: " . $this->minNumJugadores .
             ", número máximo de jugadores: " . $this->maxNumJugadores . "<br>";
+    }
+
+    // Método de la interfaz Resumible
+    public function muestraResumen(): void
+    {
+        $this->mostrarResumen();
     }
 }

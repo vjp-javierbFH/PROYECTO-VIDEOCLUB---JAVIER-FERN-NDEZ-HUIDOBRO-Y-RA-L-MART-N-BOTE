@@ -1,13 +1,14 @@
 <?php
-abstract class Soporte
+include_once "Resumible.php";
+abstract class Soporte implements Resumible
 {
     // Constante IVA
-    private const IVA = 0.21;
+    protected const IVA = 0.21;
 
-    // Atributo
-    private String $titulo;
-    private int $numero;
-    private float $precio;
+    // Atributos protected para que las subclases hereden los atributos
+    protected String $titulo;
+    protected int $numero;
+    protected float $precio;
 
     // Constructor por parámetro
     public function __construct(String $tit, int $num, float $pre)
@@ -32,10 +33,21 @@ abstract class Soporte
     }
 
     // Método que devuelve un float
-    public function getPrecioConIva() {
+    public function getPrecioConIva()
+    {
         return $this->precio * (1 + self::IVA);
     }
 
-    // Método que muestra los datos de soporte
-    abstract public function mostrarResumen();
+    // Método base
+    public function mostrarSoporte()
+    {
+        return "Título: " . $this->titulo . ", número -> " . $this->numero . ", precio -> " . $this->precio . " €";
+    }
+
+    // Implementación del método obligatorio del interfaz
+    public function muestraResumen(): void
+    {
+        echo $this->mostrarSoporte() . "<br>";
+    }
+
 }

@@ -17,7 +17,12 @@ class CintaVideo extends Soporte
     // Método que muestra los datos de  CintaVideo
     public function mostrarResumen()
     {
-        echo "Título: ".$this->getTitulo().", número -> " .$this->getNumero()." y precio -> " .$this->getPrecio();
+        echo "Título: " . $this->titulo . ", número -> " . $this->numero . ", precio -> " . $this->precio . " €";
         echo ". Duración: " . $this->duracion . " minutos<br>";
+    }
+
+    // Método de la interfaz Resumible
+    public function muestraResumen(): void {
+        $this->mostrarResumen();
     }
 }
