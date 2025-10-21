@@ -1,4 +1,5 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
 include_once "Resumible.php";
 abstract class Soporte implements Resumible
 {
@@ -9,6 +10,7 @@ abstract class Soporte implements Resumible
     protected String $titulo;
     protected int $numero;
     protected float $precio;
+    public bool $alquilado = false; // Atributo público para saber si el cliente tiene alquileres
 
     // Constructor por parámetro
     public function __construct(String $tit, int $num, float $pre)

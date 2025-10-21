@@ -1,4 +1,5 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
 // Clase Juego que hereda de la clase Soporte
 class Juego extends Soporte
 {

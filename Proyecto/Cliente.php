@@ -1,4 +1,9 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
+use Dwes\ProyectoVideoclub\Soporte;
+use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
+use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
+use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
 // Clase Cliente
 class Cliente
 {
@@ -59,41 +64,44 @@ class Cliente
     }
 
     // Método para alquilar soporte
-    public function alquilar(Soporte $s): bool
+    public function alquilar(Soporte $s): Cliente
     {
         // Con el método tieneAlquilado verificamos si el soporte está alquiladp
         if ($this->tieneAlquilado($s)) {
-            echo "El cliente ya ha alquilado el soporte " . $s->getTitulo() ."<br>";
-            return false;
+            throw new SoporteYaAlquiladoException("El cliente ya ha alquilado el soporte.<br>" . $s->getTitulo());
         }
 
         // Si número de índices del array supera o iguala al maxAlquilerConcurrente devolverá false
         if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
-            echo "El cliente ha alcanzado el número máximo de alquileres .<br>";
-            return false;
+            throw new CupoSuperadoException("El cliente ha alcanzado el numero maximo de alquileres.<br>");
         }
 
         // Almaceno el soporte al array soportesAlquilados
         $this->soportesAlquilados[] = $s;
         $this->numSoportesAlquilados++; // Incremento más uno el número de soportes alquilados
-        return true;
+
+        //Soportes alquilados: establece el estado en Soporte
+        $s->alquilado = true;
+
+        return $this;
     }
 
     // Método que devuelve el soporte por su número
-    public function devolver(int $numSoporte): bool
+    public function devolver(int $numSoporte): Cliente
     {
         foreach ($this->soportesAlquilados as $key => $soporte) {
             if ($soporte->getNumero() === $numSoporte) {
+                //Soportes devueltos: establece el estado en Soporte
+                $soporte->alquilado = false;
+
                 unset($this->soportesAlquilados[$key]); // eliminar del array
                 // Reescribe los índices desde 0 tras eliminar un índice del array
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
                 echo "Soporte " . $soporte->getTitulo() . " devuelto correctamente.<br>";
-                return true;
+                return $this;
             }
         }
-        echo "El cliente no tiene alquilado ningún soporte con número " . $numSoporte;
-        echo "<br>";
-        return false;
+        throw new SoporteNoEncontradoException("El cliente no tiene alquilado ningún soporte con número " . $numSoporte . ".<br>");
     }
 
     // Método que lista todos los soportes

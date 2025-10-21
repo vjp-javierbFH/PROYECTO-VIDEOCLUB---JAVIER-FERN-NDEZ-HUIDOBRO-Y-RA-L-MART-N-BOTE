@@ -1,4 +1,5 @@
 <?php
+namespace Dwes\ProyectoVideoclub;
 // Clase Dvd que hereda de Soporte
 class Dvd extends Soporte
 {

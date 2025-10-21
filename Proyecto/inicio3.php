@@ -1,7 +1,14 @@
 <?php
 echo "<h1>Videoclub</h1><h2>inicio3</h2><h3>Prueba videoclub</h3>";
 echo "";
-include_once "Videoclub.php"; // No incluimos nada más
+require_once "autoload.php"; // No incluimos nada más
+
+use Dwes\ProyectoVideoclub\CintaVideo;
+use Dwes\ProyectoVideoclub\Dvd;
+use Dwes\ProyectoVideoclub\Juego;
+use Dwes\ProyectoVideoclub\Cliente;
+use Dwes\ProyectoVideoclub\Soporte;
+use Dwes\ProyectoVideoclub\Videoclub;
 
 $vc = new Videoclub("Severo 8A");
 
@@ -21,14 +28,14 @@ $vc->listarProductos();
 $vc->incluirSocio("Amancio Ortega");
 $vc->incluirSocio("Pablo Picasso", 2);
 
-$vc->alquilarSocioProducto(1, 2);
-$vc->alquilarSocioProducto(1, 3);
+$vc->alquilarSocioProducto(1, [2]);
+$vc->alquilarSocioProducto(1, [3]);
 //alquilo otra vez el soporte 2 al socio 1. 
 // no debe dejarme porque ya lo tiene alquilado 
-$vc->alquilarSocioProducto(1, 2);
+$vc->alquilarSocioProducto(1, [2]);
 //alquilo el soporte 6 al socio 1. 
 //no se puede porque el socio 1 tiene 2 alquileres como máximo 
-$vc->alquilarSocioProducto(1, 6);
+$vc->alquilarSocioProducto(1, [6]);
 
 //listo los socios 
 $vc->listarSocios();
