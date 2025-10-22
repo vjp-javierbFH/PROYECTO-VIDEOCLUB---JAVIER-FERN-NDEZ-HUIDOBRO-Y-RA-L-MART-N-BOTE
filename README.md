@@ -13,3 +13,6 @@
   <li>Lenguaje de programación: PHP</li>
   <li>HTML/CSS para la presentación</li>
 </ul>
+Funcionamiento de la Clase Cliente
+
+La clase Cliente (definida en Cliente.php) representa a los socios del videoclub y gestiona sus alquileres y devoluciones de soportes (cintas de video, DVDs o juegos). A continuación, se detalla su funcionamiento:
