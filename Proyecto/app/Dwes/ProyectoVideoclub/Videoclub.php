@@ -100,6 +100,7 @@ class Videoclub
                 // Usamos el método del interfaz Resumible
                 if ($p instanceof Resumible) {
                     $p->muestraResumen();
+                    echo "<br>";
                 }
             }
         }
@@ -150,15 +151,15 @@ class Videoclub
         foreach ($numerosProductos as $numSoporte) {
             $producto = $this->buscarSoporte($numSoporte);
             if (!$producto) {
-                echo "ERROR: Producto con número $numSoporte no encontrado.<br>";
+                echo "<br>ERROR: Producto con número $numSoporte no encontrado.<br>";
                 return $this;
             }
             if ($producto->alquilado) {
-                echo "ERROR: Producto " . $producto->getTitulo() . " ya está alquilado. Ningún producto alquilado.<br>";
+                echo "<br>ERROR: Producto " . $producto->getTitulo() . " ya está alquilado. Ningún producto alquilado.<br>";
                 return $this;
             }
             if ($cliente->tieneAlquilado($producto)) {
-                echo "ERROR: Cliente ya tiene alquilado " . $producto->getTitulo() . ". Ningún producto alquilado.<br>";
+                echo "<br>ERROR: Cliente ya tiene alquilado " . $producto->getTitulo() . ". Ningún producto alquilado.<br>";
                 return $this;
             }
             $soportesAlquilables[] = $producto;

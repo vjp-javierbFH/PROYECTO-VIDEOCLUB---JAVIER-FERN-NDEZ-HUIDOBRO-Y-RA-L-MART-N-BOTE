@@ -1,41 +1,79 @@
-<?php
-echo "<h1>Videoclub</h1><h2>inicio3</h2><h3>Prueba videoclub</h3>";
-echo "";
-require_once "autoload.php"; // No incluimos nada más
+<!DOCTYPE html>
+<html lang="en">
 
-use Dwes\ProyectoVideoclub\CintaVideo;
-use Dwes\ProyectoVideoclub\Dvd;
-use Dwes\ProyectoVideoclub\Juego;
-use Dwes\ProyectoVideoclub\Cliente;
-use Dwes\ProyectoVideoclub\Soporte;
-use Dwes\ProyectoVideoclub\Videoclub;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio3</title>
+    <style>
+        body{
+            background-color: rgb(236, 205, 207);
+        }
+        .estilo{
+            color: rgb(0, 0, 0);
+        }
+        .estilo h1 {
+            color: rgb(216, 63, 63);
+        }
+        .estilo h3{
+            color: rgb(95, 41, 41);
+        }
+        .estilo strong {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        .estilo p {
+            color: red;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+    </style>
+</head>
 
-$vc = new Videoclub("Severo 8A");
+<body>
+    <div class="estilo">
+        <?php
+        echo "<h1>Videoclub</h1><h2>inicio3</h2><h3>Prueba videoclub</h3>";
+        echo "";
+        require_once "autoload.php"; // No incluimos nada más
 
-//voy a incluir unos cuantos soportes de prueba
-$vc->incluirJuego("God of War", 19.99, "PS4", 1, 1);
-$vc->incluirJuego("The Last of Us Part II", 49.99, "PS4", 1, 1);
-$vc->incluirDvd("Torrente", 4.5, "es", "16:9");
-$vc->incluirDvd("Origen", 4.5, "es,en,fr", "16:9");
-$vc->incluirDvd("El Imperio Contraataca", 3, "es,en", "16:9");
-$vc->incluirCintaVideo("Los cazafantasmas", 3.5, 107);
-$vc->incluirCintaVideo("El nombre de la Rosa", 1.5, 140);
+        use Dwes\ProyectoVideoclub\CintaVideo;
+        use Dwes\ProyectoVideoclub\Dvd;
+        use Dwes\ProyectoVideoclub\Juego;
+        use Dwes\ProyectoVideoclub\Cliente;
+        use Dwes\ProyectoVideoclub\Soporte;
+        use Dwes\ProyectoVideoclub\Videoclub;
 
-//listo los productos 
-$vc->listarProductos();
+        $vc = new Videoclub("Severo 8A");
 
-//voy a crear algunos socios 
-$vc->incluirSocio("Amancio Ortega");
-$vc->incluirSocio("Pablo Picasso", 2);
+        //voy a incluir unos cuantos soportes de prueba
+        $vc->incluirJuego("God of War", 19.99, "PS4", 1, 1);
+        $vc->incluirJuego("The Last of Us Part II", 49.99, "PS4", 1, 1);
+        $vc->incluirDvd("Torrente", 4.5, "es", "16:9");
+        $vc->incluirDvd("Origen", 4.5, "es,en,fr", "16:9");
+        $vc->incluirDvd("El Imperio Contraataca", 3, "es,en", "16:9");
+        $vc->incluirCintaVideo("Los cazafantasmas", 3.5, 107);
+        $vc->incluirCintaVideo("El nombre de la Rosa", 1.5, 140);
 
-$vc->alquilarSocioProducto(1, [2]);
-$vc->alquilarSocioProducto(1, [3]);
-//alquilo otra vez el soporte 2 al socio 1. 
-// no debe dejarme porque ya lo tiene alquilado 
-$vc->alquilarSocioProducto(1, [2]);
-//alquilo el soporte 6 al socio 1. 
-//no se puede porque el socio 1 tiene 2 alquileres como máximo 
-$vc->alquilarSocioProducto(1, [6]);
+        //listo los productos
+        $vc->listarProductos();
 
-//listo los socios 
-$vc->listarSocios();
+        //voy a crear algunos socios
+        $vc->incluirSocio("Amancio Ortega");
+        $vc->incluirSocio("Pablo Picasso", 2);
+
+        $vc->alquilarSocioProducto(1, [2]);
+        $vc->alquilarSocioProducto(1, [3]);
+        //alquilo otra vez el soporte 2 al socio 1.
+        // no debe dejarme porque ya lo tiene alquilado
+        $vc->alquilarSocioProducto(1, [2]);
+        //alquilo el soporte 6 al socio 1.
+        //no se puede porque el socio 1 tiene 2 alquileres como máximo
+        $vc->alquilarSocioProducto(1, [6]);
+
+        //listo los socios
+        $vc->listarSocios();
+        ?>
+    </div>
+
+</body>
+
+</html>
