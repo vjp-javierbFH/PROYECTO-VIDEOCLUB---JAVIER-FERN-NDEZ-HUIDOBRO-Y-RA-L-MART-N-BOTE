@@ -1,9 +1,14 @@
 <?php
+
 namespace Dwes\ProyectoVideoclub;
+
 use Dwes\ProyectoVideoclub\Soporte;
 use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
 use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
+use Dwes\ProyectoVideoclub\Util\VideoclubException;
+use Exception;
+
 // Clase Cliente
 class Cliente
 {
@@ -67,13 +72,21 @@ class Cliente
     public function alquilar(Soporte $s): Cliente
     {
         // Con el método tieneAlquilado verificamos si el soporte está alquiladp
-        if ($this->tieneAlquilado($s)) {
-            throw new SoporteYaAlquiladoException("El cliente ya ha alquilado el soporte.<br>" . $s->getTitulo());
+        try {
+            if ($this->tieneAlquilado($s)) {
+                throw new SoporteYaAlquiladoException("El cliente ya ha alquilado el soporte.<br>" . $s->getTitulo());
+            }
+        } catch (SoporteYaAlquiladoException $e) {
+            $e->mostrarError($s);
         }
 
         // Si número de índices del array supera o iguala al maxAlquilerConcurrente devolverá false
-        if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
-            throw new CupoSuperadoException("El cliente ha alcanzado el numero maximo de alquileres.<br>");
+        try {
+            if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
+                throw new CupoSuperadoException("El cliente ha alcanzado el numero maximo de alquileres.<br>");
+            }
+        } catch (CupoSuperadoException $e) {
+            $e->mostrarError();
         }
 
         // Almaceno el soporte al array soportesAlquilados
@@ -97,11 +110,16 @@ class Cliente
                 unset($this->soportesAlquilados[$key]); // eliminar del array
                 // Reescribe los índices desde 0 tras eliminar un índice del array
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
-                echo "Soporte " . $soporte->getTitulo() . " devuelto correctamente.<br>";
+                echo "Soporte <strong>" . $soporte->getTitulo() . "</strong> devuelto correctamente.<br>";
                 return $this;
             }
         }
-        throw new SoporteNoEncontradoException("El cliente no tiene alquilado ningún soporte con número " . $numSoporte . ".<br>");
+        try {
+            throw new SoporteNoEncontradoException("El cliente no tiene alquilado ningún soporte con número " . $numSoporte . ".<br>");
+        } catch (SoporteNoEncontradoException $e) {
+            $e->mostrarError($numSoporte);
+            return $this;
+        }
     }
 
     // Método que lista todos los soportes

@@ -14,10 +14,10 @@ echo "<h3>Prueba Cliente</h3>";
 //instanciamos un par de objetos cliente
 $cliente1 = new Cliente("Bruce Wayne", 23);
 $cliente2 = new Cliente("Clark Kent", 33);
-
+echo "Identificando clientes.";
 //mostramos el número de cada cliente creado 
-echo "<br>El identificador del cliente 1 es: " . $cliente1->getNumero();
-echo "<br>El identificador del cliente 2 es: " . $cliente2->getNumero()."<br>";
+echo "<br>El identificador del cliente 1 es: <strong>" . $cliente1->getNumero()."</strong>";
+echo "<br>El identificador del cliente 2 es: <strong>" . $cliente2->getNumero()."</strong><br>";
 
 //instancio algunos soportes 
 $soporte1 = new CintaVideo("Los cazafantasmas", 23, 3.5, 107);
@@ -25,6 +25,7 @@ $soporte2 = new Juego("The Last of Us Part II", 26, 49.99, "PS4", 1, 1);
 $soporte3 = new Dvd("Origen", 24, 15, "es,en,fr", "16:9");
 $soporte4 = new Dvd("El Imperio Contraataca", 4, 3, "es,en","16:9");
 
+echo "<br>Cliente <strong>" . $cliente1->getNumero()."</strong> alquilando...<br>";
 //alquilo algunos soportes
 $cliente1->alquilar($soporte1)
          ->alquilar($soporte2)
@@ -41,7 +42,10 @@ $cliente1->devolver(4);
 $cliente1->devolver(2);
 //alquilo otro soporte
 $cliente1->alquilar($soporte4);
+echo "<br>";
 //listo los elementos alquilados
+echo "Lista de alquileres del cliente <strong>" . $cliente1->getNumero()."</strong><br>";
 $cliente1->listarAlquileres();
 //este cliente no tiene alquileres
+echo "<br>Cliente <strong>" . $cliente2->getNumero()."</strong> devolviendo soporte...<br>";
 $cliente2->devolver(2);
