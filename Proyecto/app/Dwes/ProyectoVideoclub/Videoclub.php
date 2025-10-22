@@ -119,6 +119,7 @@ class Videoclub
         }
     }
 
+    // Método privado para buscar soporte por número
     private function buscarSoporte(int $numeroSoporte): ?Soporte
     {
         foreach ($this->productos as $p) {
@@ -144,7 +145,7 @@ class Videoclub
             echo "No se encontró el socio con número $numCliente.<br>";
             return $this;
         }
-
+        // Verificar todos los productos antes de alquilar
         $soportesAlquilables = [];
         foreach ($numerosProductos as $numSoporte) {
             $producto = $this->buscarSoporte($numSoporte);
