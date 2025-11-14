@@ -1,31 +1,49 @@
 <?php
-
 namespace Dwes\ProyectoVideoclub;
-
 use Dwes\ProyectoVideoclub\Soporte;
 use Dwes\ProyectoVideoclub\Util\CupoSuperadoException;
 use Dwes\ProyectoVideoclub\Util\SoporteYaAlquiladoException;
 use Dwes\ProyectoVideoclub\Util\SoporteNoEncontradoException;
-use Dwes\ProyectoVideoclub\Util\VideoclubException;
-use Exception;
-
 // Clase Cliente
 class Cliente
 {
     // Atributos
     private String $nombre;
     private int $numero;
+    private string $user; // NUEVO: Usuario del cliente
+    private string $password; // NUEVO: Contraseña del cliente
     private int $maxAlquilerConcurrente;
     private int $numSoportesAlquilados = 0; // Lo inicializo a 0
     private array $soportesAlquilados = []; // Array que contendrá 
 
 
-    // Constructor por parámetro de nombre y numero
-    public function __construct(String $nombre, int $numero)
+    // Constructor por parámetro de nombre, numero, user y password (MODIFICADO)
+    // El constructor ahora recibe 4 argumentos
+    public function __construct(String $nombre, int $numero, string $user, string $password)
     {
         $this->nombre = $nombre;
         $this->numero = $numero;
+        $this->user = $user;
+        $this->password = $password;
         $this->maxAlquilerConcurrente = 3; // Inicializo la variable maxAlquilerConcurrente por defecto a 3
+    }
+    
+    // Getter para el usuario (NUEVO)
+    public function getUser(): string
+    {
+        return $this->user;
+    }
+
+    // Getter para la password (NUEVO)
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    // Método para obtener los alquileres del cliente (NUEVO)
+    public function getAlquileres(): array
+    {
+        return $this->soportesAlquilados;
     }
 
     // Getter y Setter de la variable numero
@@ -45,61 +63,53 @@ class Cliente
         return $this->numSoportesAlquilados;
     }
 
-    // Método que muestra los datos de clientes
-    public function mostrarCliente()
+    // Getter de nombre
+    public function getNombre(): String
     {
-        echo "<strong>Cliente:</strong> " . $this->nombre . "<br>";
-        echo "Número de cliente: " . $this->numero . "<br>";
-        // Con count muestra el número de índices que tiene el array
-        echo "Alquileres actuales: " . count($this->soportesAlquilados) . "<br>";
-        echo "Total de soportes alquilados: {$this->numSoportesAlquilados}<br>";
+        return $this->nombre;
     }
 
-    // Métodos
-    // Método que recorre el array para comprobar si está el objeto de la clase Soporte
-    public function tieneAlquilado(Soporte $s): bool
+    // Getter de soportesAlquilados
+    public function getSoportesAlquilados(): array
     {
-        foreach ($this->soportesAlquilados as $soporte) {
-            // Compara por número de soporte
-            if ($soporte->getNumero() === $s->getNumero()) {
-                return true;
-            }
-        }
-        return false;
+        return $this->soportesAlquilados;
     }
 
-    // Método para alquilar soporte
-    public function alquilar(Soporte $s): Cliente
+    // Setter de maxAlquilerConcurrente
+    public function setMaxAlquilerConcurrente(int $maxAlquiler): void
     {
-        // Con el método tieneAlquilado verificamos si el soporte está alquiladp
-        try {
-            if ($this->tieneAlquilado($s)) {
-                throw new SoporteYaAlquiladoException("El cliente ya ha alquilado el soporte.<br>" . $s->getTitulo());
-            }
-        } catch (SoporteYaAlquiladoException $e) {
-            $e->mostrarError($s);
+        $this->maxAlquilerConcurrente = $maxAlquiler;
+    }
+
+    // Método para alquilar un soporte
+    public function alquilar(Soporte $soporte): Cliente
+    {
+        // Comprobar si el cupo de alquileres se ha superado
+        if ($this->numSoportesAlquilados >= $this->maxAlquilerConcurrente) {
+            throw new CupoSuperadoException("El cliente " . $this->nombre . " ha superado el límite de " . $this->maxAlquilerConcurrente . " alquileres concurrentes.<br>");
         }
 
-        // Si número de índices del array supera o iguala al maxAlquilerConcurrente devolverá false
-        try {
-            if (count($this->soportesAlquilados) >= $this->maxAlquilerConcurrente) {
-                throw new CupoSuperadoException("El cliente ha alcanzado el numero maximo de alquileres.<br>");
-            }
-        } catch (CupoSuperadoException $e) {
-            $e->mostrarError();
+        // Comprobar si el soporte ya está alquilado por el cliente
+        // Si el soporte estuviera en la sesión del admin, su estado alquilado=true
+        if ($soporte->alquilado) {
+            // Nota: Este mensaje de error es un poco engañoso si el soporte está alquilado por el mismo cliente
+            // Pero para el ejercicio, nos basamos en que la disponibilidad la gestiona la propiedad $alquilado del Soporte.
+            throw new SoporteYaAlquiladoException("El soporte " . $soporte->getTitulo() . " ya está alquilado por otro cliente/usuario.<br>");
         }
 
-        // Almaceno el soporte al array soportesAlquilados
-        $this->soportesAlquilados[] = $s;
-        $this->numSoportesAlquilados++; // Incremento más uno el número de soportes alquilados
+        // Alquilar el soporte
+        $this->soportesAlquilados[] = $soporte;
+        $this->numSoportesAlquilados++;
 
-        //Soportes alquilados: establece el estado en Soporte
-        $s->alquilado = true;
+        // Establece el estado en Soporte
+        $soporte->alquilado = true;
+
+        echo "El soporte " . $soporte->getTitulo() . " ha sido alquilado correctamente.<br>";
 
         return $this;
     }
 
-    // Método que devuelve el soporte por su número
+    // Método para devolver un soporte
     public function devolver(int $numSoporte): Cliente
     {
         foreach ($this->soportesAlquilados as $key => $soporte) {
@@ -110,16 +120,11 @@ class Cliente
                 unset($this->soportesAlquilados[$key]); // eliminar del array
                 // Reescribe los índices desde 0 tras eliminar un índice del array
                 $this->soportesAlquilados = array_values($this->soportesAlquilados);
-                echo "Soporte <strong>" . $soporte->getTitulo() . "</strong> devuelto correctamente.<br>";
+                echo "Soporte " . $soporte->getTitulo() . " devuelto correctamente.<br>";
                 return $this;
             }
         }
-        try {
-            throw new SoporteNoEncontradoException("El cliente no tiene alquilado ningún soporte con número " . $numSoporte . ".<br>");
-        } catch (SoporteNoEncontradoException $e) {
-            $e->mostrarError($numSoporte);
-            return $this;
-        }
+        throw new SoporteNoEncontradoException("El cliente no tiene alquilado ningún soporte con número " . $numSoporte . ".<br>");
     }
 
     // Método que lista todos los soportes
@@ -133,7 +138,7 @@ class Cliente
         } else {
             // Recorre el array para mostrar los datos de soporte
             foreach ($this->soportesAlquilados as $soporte) {
-                echo "- " . $soporte->mostrarResumen();
+                $soporte->muestraResumen();
             }
         }
     }
