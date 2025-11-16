@@ -182,4 +182,3 @@ La clase `Videoclub` es el **núcleo** de la aplicación, encargada de gestionar
 
 ---
 
-> **"Gestión completa y segura del videoclub en una interfaz clara y moderna."**
