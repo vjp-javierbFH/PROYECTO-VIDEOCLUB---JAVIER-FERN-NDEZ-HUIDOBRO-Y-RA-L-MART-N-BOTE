@@ -5,7 +5,7 @@ ob_start();
 
 use Dwes\ProyectoVideoclub\Cliente;
 
-// === SEGURIDAD ===
+// === 1. SEGURIDAD: Comprobar sesión y POST ===
 if (!isset($_SESSION['user_name']) || !isset($_POST['numero'])) {
     header('Location: index.php');
     exit;
@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_name']) || !isset($_POST['numero'])) {
 $numeroCliente = (int)$_POST['numero'];
 $cliente = null;
 
-// Buscar cliente
+// === 2. Buscar cliente en sesión global ===
 foreach ($_SESSION['clientes'] as $c) {
     if ($c->getNumero() === $numeroCliente) {
         $cliente = $c;
@@ -28,16 +28,20 @@ if (!$cliente) {
     exit;
 }
 
+// === 3. Verificar permisos ===
 $esAdmin = ($_SESSION['role'] ?? '') === 'admin';
-$esPropietario = ($_SESSION['user_name'] ?? '') === $cliente->getUser();
+$esPropietario = strcasecmp(
+    ($_SESSION['user_name'] ?? ''),
+    $cliente->getUser()
+) === 0;
 
 if (!$esAdmin && !$esPropietario) {
-    $_SESSION['error_login'] = 'No tienes permiso.';
+    $_SESSION['error_login'] = 'No tienes permiso para editar este cliente.';
     header('Location: index.php');
     exit;
 }
 
-// === RECOGER DATOS ===
+// === 4. Recoger y validar datos ===
 $nombre = trim($_POST['nombre'] ?? '');
 $usuario = trim($_POST['usuario'] ?? '');
 $password = $_POST['password'] ?? '';
@@ -51,7 +55,7 @@ if ($maxAlquileres < 1 || $maxAlquileres > 10) $errores[] = 'Máx. alquileres: 1
 
 // Comprobar si el usuario ya existe (excepto él mismo)
 foreach ($_SESSION['clientes'] as $c) {
-    if ($c->getNumero() !== $numeroCliente && $c->getUser() === $usuario) {
+    if ($c->getNumero() !== $numeroCliente && strcasecmp($c->getUser(), $usuario) === 0) {
         $errores[] = 'El usuario ya está en uso por otro cliente.';
     }
 }
@@ -62,23 +66,32 @@ if ($errores) {
     exit;
 }
 
-// === ACTUALIZAR CLIENTE ===
-$cliente->nombre = $nombre;
-$cliente->user = $usuario;
-$cliente->maxAlquilerConcurrente = $maxAlquileres;
+// === 5. ACTUALIZAR CLIENTE CON SETTERS ===
+$cliente->setNombre($nombre);
+$cliente->setUser($usuario);
+$cliente->setMaxAlquilerConcurrente($maxAlquileres);
 
 if (!empty($password)) {
-    $cliente->password = password_hash($password, PASSWORD_DEFAULT);
+    $cliente->setPassword(password_hash($password, PASSWORD_DEFAULT));
 }
 
-// === GUARDAR EN SESIÓN ===
-$_SESSION['clientes'] = array_map(function($c) use ($cliente, $numeroCliente) {
-    return $c->getNumero() === $numeroCliente ? $cliente : $c;
-}, $_SESSION['clientes']);
+// === 6. Guardar en sesión global ===
+foreach ($_SESSION['clientes'] as $i => $c) {
+    if ($c->getNumero() === $numeroCliente) {
+        $_SESSION['clientes'][$i] = $cliente;
+        break;
+    }
+}
 
-$_SESSION['exito_cliente'] = "Cliente actualizado correctamente.";
+// === 7. Si es el cliente logueado, actualizar cliente_data ===
+if ($esPropietario && isset($_SESSION['cliente_data'])) {
+    $_SESSION['cliente_data'] = serialize($cliente);
+    $_SESSION['user_name'] = $cliente->getUser(); // Actualiza el login
+}
 
-// === REDIRIGIR ===
+// === 8. Mensaje de éxito y redirección ===
+$_SESSION['exito_cliente'] = "Perfil actualizado correctamente.";
+
 $redirect = $esAdmin ? 'mainAdmin.php' : 'mainCliente.php';
 header("Location: $redirect");
 exit;
